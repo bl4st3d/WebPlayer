@@ -1,2 +1,16 @@
+/*
+ * Basics
+ */
+
 @import './toolkit/normalize.scss';
-@import './toolkit/variables.scss'
+@import './toolkit/variables.scss';
+
+/*
+ * Atoms
+ */
+@import './toolkit/image.scss';
+
+/*
+ * Organisms
+ */
+@import './toolkit/header.scss';
