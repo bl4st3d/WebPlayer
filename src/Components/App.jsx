@@ -1,12 +1,14 @@
 import * as React from 'react';
 import '../style/main.scss';
 
-import { Button } from './atoms/Button';
+import { Button } from './atoms/';
+import { Header } from './organisms';
 
 export const App = () => {
     return (
-        <div>
+        <>
+            <Header />
             <Button>Test</Button>
-        </div>
+        </>
     );
 };
