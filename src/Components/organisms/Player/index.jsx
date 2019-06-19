@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { CLIENT_ID } from '../../../ressources/apiKey';
-import { PlayerButton } from '../../molecules/PlayerButtons';
-export default class Player extends React.Component {
+import { PlayerButtons } from '../../molecules';
+import { Button } from '../../atoms';
+
+class Player extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -77,6 +79,7 @@ export default class Player extends React.Component {
 
         return (
             <main className="player-page">
+                <Button>Menu</Button>
                 <p>{track ? track.name : errorMsg}</p>
                 <p>{track ? track.artisteName : errorMsg}</p>
 
@@ -87,7 +90,7 @@ export default class Player extends React.Component {
                     ref={el => (this.player = el)}
                 ></audio>
 
-                <PlayerButton
+                <PlayerButtons
                     play={this.isPlaying}
                     isPlaying={isPlaying}
                     isPlayingPrev={this.isPlayingPrev}
@@ -98,3 +101,5 @@ export default class Player extends React.Component {
         );
     }
 }
+
+export { Player };

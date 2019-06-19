@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Button, Icon } from '../atoms';
+import { Button, Icon } from '../../atoms';
 
-export const PlayerButton = ({ play, isPlaying, isPlayingPrev, isPlayingNext, tracks }) => {
+export const PlayerButtons = ({ play, isPlaying, isPlayingPrev, isPlayingNext, tracks }) => {
     return (
         <section className="player-buttons">
             <Button onClick={() => isPlayingPrev(tracks)}>
