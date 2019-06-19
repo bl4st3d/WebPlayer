@@ -17,8 +17,9 @@ export default class Player extends React.Component {
             .then(res => res.json())
             .then(res => {
                 let trackObject = {};
-                res.results.map(track => {
+                res.results.map((track, index) => {
                     trackObject = {
+                        index,
                         albumId: track.album_id,
                         albumImage: track.album_image,
                         albumName: track.album_name,
@@ -45,8 +46,9 @@ export default class Player extends React.Component {
         this.source.connect(this.analyser);
         this.analyser.connect(audioCtx.destination);
         this.player.autoplay = true;
+        this.setState({ isPlaying: true, track: { ...this.state.tracks[0] } });
+
         this.player.play();
-        this.setState({ isPlaying: true });
     };
 
     isPlaying = bool => {
@@ -54,22 +56,38 @@ export default class Player extends React.Component {
         this.setState({ isPlaying: !bool });
     };
 
+    getTrackIndex = tracks => {
+        let array = tracks;
+        return array.find((track, index) => index === this.state.track.index);
+    };
+
+    isPlayingPrev = tracks => {
+        if (this.getTrackIndex(tracks).index !== 0) {
+            this.setState({ track: tracks[parseInt(this.getTrackIndex(tracks).index - 1)] });
+        }
+    };
+
+    isPlayingNext = tracks => {
+        this.setState({ track: tracks[parseInt(this.getTrackIndex(tracks).index + 1)] });
+    };
+
     render() {
-        let { tracks } = this.state;
+        let { tracks, track, isPlaying } = this.state;
+        let errorMsg = 'No audio found';
         return (
             <div>
-                <p>{tracks.length !== 0 ? tracks[0].name : null}</p>
-                <p>{tracks.length !== 0 ? tracks[0].artisteName : null}</p>
+                <p>{track ? track.name : errorMsg}</p>
+                <p>{track ? track.artisteName : errorMsg}</p>
 
                 <audio
                     controls
                     crossOrigin="anonymous"
-                    src={tracks.length !== 0 ? tracks[0].audio : ''}
+                    src={track ? track.audio : ''}
                     ref={el => (this.player = el)}
                 ></audio>
-                <Button>prev</Button>
-                <Button onClick={() => this.isPlaying(this.state.isPlaying)}>play/stop</Button>
-                <Button>next</Button>
+                <Button onClick={() => this.isPlayingPrev(tracks)}>prev</Button>
+                <Button onClick={() => this.isPlaying(isPlaying)}>play/stop</Button>
+                <Button onClick={() => this.isPlayingNext(tracks)}>next</Button>
             </div>
         );
     }
