@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CLIENT_ID } from '../../../ressources/apiKey';
-import { PlayerButtons } from '../../molecules';
+import { PlayerButtons, PlayerInformations } from '../../molecules';
 import { Button } from '../../atoms';
 
 class Player extends React.Component {
@@ -9,6 +9,7 @@ class Player extends React.Component {
         this.state = {
             tracks: [],
             isPlaying: null,
+            isShowingInfo: false,
         };
         this.array = [];
         this.player = new Audio();
@@ -26,7 +27,7 @@ class Player extends React.Component {
                         albumImage: track.album_image,
                         albumName: track.album_name,
                         artistId: track.artist_id,
-                        artisteName: track.artist_name,
+                        artistName: track.artist_name,
                         audio: track.audio,
                         duration: track.duration,
                         trackId: track.id,
@@ -73,32 +74,49 @@ class Player extends React.Component {
         this.setState({ track: tracks[parseInt(this.getTrackIndex(tracks).index + 1)] });
     };
 
+    isShowingInfo = bool => {
+        this.setState({ isShowingInfo: !bool });
+    };
+
     render() {
-        let { tracks, track, isPlaying } = this.state;
+        let { tracks, track, isPlaying, isShowingInfo } = this.state;
         let errorMsg = 'No audio found';
 
-        return (
-            <main className="player-page">
-                <Button>Menu</Button>
-                <p>{track ? track.name : errorMsg}</p>
-                <p>{track ? track.artisteName : errorMsg}</p>
+        if (tracks.length !== 0 && track) {
+            return (
+                <main className="player-page">
+                    <Button onClick={() => this.isShowingInfo(isShowingInfo)}>Menu</Button>
 
-                <audio
-                    controls
-                    crossOrigin="anonymous"
-                    src={track ? track.audio : ''}
-                    ref={el => (this.player = el)}
-                ></audio>
+                    {isShowingInfo && (
+                        <PlayerInformations
+                            track={track}
+                            name={track.name}
+                            artistName={track.artistName}
+                            album={track.albumName}
+                            img={track.albumImage}
+                            errorMsg={errorMsg}
+                        />
+                    )}
 
-                <PlayerButtons
-                    play={this.isPlaying}
-                    isPlaying={isPlaying}
-                    isPlayingPrev={this.isPlayingPrev}
-                    isPlayingNext={this.isPlayingNext}
-                    tracks={tracks}
-                />
-            </main>
-        );
+                    <audio
+                        controls
+                        crossOrigin="anonymous"
+                        src={track ? track.audio : ''}
+                        ref={el => (this.player = el)}
+                    ></audio>
+
+                    <PlayerButtons
+                        play={this.isPlaying}
+                        isPlaying={isPlaying}
+                        isPlayingPrev={this.isPlayingPrev}
+                        isPlayingNext={this.isPlayingNext}
+                        tracks={tracks}
+                    />
+                </main>
+            );
+        } else {
+            return null;
+        }
     }
 }
 
