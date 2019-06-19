@@ -4,13 +4,28 @@
 
 @import './toolkit/normalize.scss';
 @import './toolkit/variables.scss';
+@import './toolkit/default.scss';
 
 /*
  * Atoms
  */
 @import './toolkit/image.scss';
+@import './toolkit/button.scss';
+
+
+/*
+ * Molecules
+ */
+ @import './toolkit/player-buttons.scss';
+
+
 
 /*
  * Organisms
  */
 @import './toolkit/header.scss';
+
+/*
+ * Layout
+ */
+ @import './toolkit/player-page.scss';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CLIENT_ID } from '../../../ressources/apiKey';
-import { Button } from '../../atoms';
+import { PlayerButton } from '../../molecules/PlayerButtons';
 export default class Player extends React.Component {
     constructor(props) {
         super(props);
@@ -74,8 +74,9 @@ export default class Player extends React.Component {
     render() {
         let { tracks, track, isPlaying } = this.state;
         let errorMsg = 'No audio found';
+
         return (
-            <div>
+            <main className="player-page">
                 <p>{track ? track.name : errorMsg}</p>
                 <p>{track ? track.artisteName : errorMsg}</p>
 
@@ -85,10 +86,15 @@ export default class Player extends React.Component {
                     src={track ? track.audio : ''}
                     ref={el => (this.player = el)}
                 ></audio>
-                <Button onClick={() => this.isPlayingPrev(tracks)}>prev</Button>
-                <Button onClick={() => this.isPlaying(isPlaying)}>play/stop</Button>
-                <Button onClick={() => this.isPlayingNext(tracks)}>next</Button>
-            </div>
+
+                <PlayerButton
+                    play={this.isPlaying}
+                    isPlaying={isPlaying}
+                    isPlayingPrev={this.isPlayingPrev}
+                    isPlayingNext={this.isPlayingNext}
+                    tracks={tracks}
+                />
+            </main>
         );
     }
 }
