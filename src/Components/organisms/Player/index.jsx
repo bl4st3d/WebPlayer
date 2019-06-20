@@ -74,6 +74,10 @@ class Player extends React.Component {
         this.setState({ track: tracks[parseInt(this.getTrackIndex(tracks).index + 1)] });
     };
 
+    isPlayingSelectedTrack = track => {
+        this.setState({ track: this.state.tracks[track.index] });
+    };
+
     isShowingInfo = bool => {
         this.setState({ isShowingInfo: !bool });
     };
@@ -95,13 +99,16 @@ class Player extends React.Component {
                             album={track.albumName}
                             img={track.albumImage}
                             errorMsg={errorMsg}
+                            tracks={tracks}
+                            isPlayingSelectedTrack={this.isPlayingSelectedTrack}
                         />
                     )}
 
                     <audio
                         controls
                         crossOrigin="anonymous"
-                        src={track ? track.audio : ''}
+                        autoPlay
+                        src={track.audio}
                         ref={el => (this.player = el)}
                     ></audio>
 
