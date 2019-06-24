@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export const TracksList = ({ tracks, isPlayingSelectedTrack }) => {
     return (
-        <ul>
+        <ul className="tracks-list">
             {tracks.map(track => (
                 <li key={track.trackId}>
                     <button type="button" onClick={() => isPlayingSelectedTrack(track)}>
