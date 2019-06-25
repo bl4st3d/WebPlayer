@@ -1,0 +1,37 @@
+.timeline {
+    flex-basis: 90%;
+    padding-top: 1rem;
+    > span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        progress[value] {
+            width: 95%;
+            height: 0.1rem;
+            background: #eacaca00;
+        }
+
+        progress[value]::-webkit-progress-bar {
+            background-color: rgba(241, 241, 241, 0.75);
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+        }
+
+        progress[value]::-webkit-progress-value {
+            background-color: $white;
+            height: 0.2rem;
+        }
+    }
+    .time {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p {
+            color: $white;
+            margin-bottom: 0;
+        }
+    }
+}

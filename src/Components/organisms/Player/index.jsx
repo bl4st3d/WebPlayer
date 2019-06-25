@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CLIENT_ID } from '../../../ressources/apiKey';
-import { PlayerButtons, PlayerInformations } from '../../molecules';
+import { PlayerButtonsContainer, PlayerInformations } from '../../molecules';
 import { Button } from '../../atoms';
 
 class Player extends React.Component {
@@ -48,9 +48,8 @@ class Player extends React.Component {
         this.analyser = audioCtx.createAnalyser();
         this.source.connect(this.analyser);
         this.analyser.connect(audioCtx.destination);
-        this.player.autoplay = true;
         this.setState({ isPlaying: true, track: { ...this.state.tracks[0] } });
-
+        this.getDuration();
         this.player.play();
     };
 
@@ -72,6 +71,7 @@ class Player extends React.Component {
 
     isPlayingNext = tracks => {
         this.setState({ track: tracks[parseInt(this.getTrackIndex(tracks).index + 1)] });
+        this.player;
     };
 
     isPlayingSelectedTrack = track => {
@@ -82,8 +82,28 @@ class Player extends React.Component {
         this.setState({ isShowingInfo: !bool });
     };
 
+    /** ref: https://stackoverflow.com/a/52049378 */
+    formatTime(seconds) {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = seconds % 60;
+        return [h, m > 9 ? m : h ? '0' + m : m || '0', s > 9 ? s.toFixed(0) : '0' + s.toFixed(0)]
+            .filter(a => a)
+            .join(':');
+    }
+
+    getDuration = () =>
+        this.player.addEventListener('timeupdate', e => {
+            const progressValue = document.querySelector('#progressValue');
+            this.setState({
+                currentTime: this.formatTime(e.target.currentTime),
+                duration: this.formatTime(e.target.duration),
+            });
+            progressValue.value = this.player.currentTime / this.player.duration;
+        });
+
     render() {
-        let { tracks, track, isPlaying, isShowingInfo } = this.state;
+        let { currentTime, duration, tracks, track, isPlaying, isShowingInfo } = this.state;
         let errorMsg = 'No audio found';
 
         if (tracks.length !== 0 && track) {
@@ -112,12 +132,14 @@ class Player extends React.Component {
                         ref={el => (this.player = el)}
                     ></audio>
 
-                    <PlayerButtons
+                    <PlayerButtonsContainer
                         play={this.isPlaying}
                         isPlaying={isPlaying}
                         isPlayingPrev={this.isPlayingPrev}
                         isPlayingNext={this.isPlayingNext}
                         tracks={tracks}
+                        currentTime={currentTime}
+                        duration={duration}
                     />
                 </main>
             );
