@@ -139,7 +139,7 @@ class Player extends React.Component {
                         isPlayingNext={this.isPlayingNext}
                         tracks={tracks}
                         currentTime={currentTime}
-                        duration={duration}
+                        duration={duration === '0:0NaN' ? '0:00' : duration}
                     />
                 </main>
             );
