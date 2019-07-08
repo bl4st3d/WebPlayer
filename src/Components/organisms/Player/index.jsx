@@ -109,7 +109,9 @@ class Player extends React.Component {
         if (tracks.length !== 0 && track) {
             return (
                 <main className="player-page">
-                    <Button onClick={() => this.isShowingInfo(isShowingInfo)}>Menu</Button>
+                    <Button className={!isShowingInfo ? '' : 'close'} onClick={() => this.isShowingInfo(isShowingInfo)}>
+                        {!isShowingInfo ? 'List' : <span></span>}
+                    </Button>
 
                     {isShowingInfo && (
                         <PlayerInformations
