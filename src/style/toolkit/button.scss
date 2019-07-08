@@ -1,0 +1,41 @@
+button {
+  background-color: transparent;
+  border: none;
+
+  &.close {
+    position: absolute;
+    z-index: 50;
+    right: 1rem;
+    top: 1rem;
+    height: 2rem;
+    width: 2rem;
+    padding: 0;
+
+    span {
+      display: block;
+      &,
+      &:before,
+      &:after {
+        position: absolute;
+        right: calc(50% - .5rem);
+      }
+
+      &:before,
+      &:after {
+        content: '';
+        height: .1rem;
+        width: 1rem;
+        background: $white;
+        transform-origin: center;
+      }
+
+      &:before {
+        transform: rotate(45deg)
+      }
+
+      &:after {
+        transform: rotate(-45deg)
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+
+/*
+ * Default colors
+ */
+$white: #f1f1f1 !important;
+$black: #0e0e0e !important;
+
+/*
+ * Player
+ */
+
+$player-button-bg: $black;
+$player-button-color: $white;
+$player-button-bg-action: $player-button-color;
+$player-button-color-action: $player-button-bg;
+
+/*
+ * Tracks list
+ */
+
+$list-bg-hover: rgba(101, 99, 99, 0.5);
