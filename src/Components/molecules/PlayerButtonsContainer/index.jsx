@@ -3,6 +3,7 @@ import { Timeline, PlayerButtons } from '../../molecules';
 
 export const PlayerButtonsContainer = ({
     currentTime,
+    cursorTime,
     duration,
     play,
     isPlaying,
@@ -12,7 +13,7 @@ export const PlayerButtonsContainer = ({
 }) => {
     return (
         <section className="player-buttons-container">
-            <Timeline currentTime={currentTime} duration={duration} />
+            <Timeline currentTime={currentTime} duration={duration} cursorTime={cursorTime} />
             <PlayerButtons
                 isPlaying={isPlaying}
                 isPlayingPrev={isPlayingPrev}

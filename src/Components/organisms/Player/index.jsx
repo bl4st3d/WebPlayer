@@ -98,12 +98,14 @@ class Player extends React.Component {
             this.setState({
                 currentTime: this.formatTime(e.target.currentTime),
                 duration: this.formatTime(e.target.duration),
+                cursorTime: this.player.currentTime / this.player.duration,
             });
             progressValue.value = this.player.currentTime / this.player.duration;
         });
 
+    updateDuration = () => {};
     render() {
-        let { currentTime, duration, tracks, track, isPlaying, isShowingInfo } = this.state;
+        let { currentTime, cursorTime, duration, tracks, track, isPlaying, isShowingInfo } = this.state;
         let errorMsg = 'No audio found';
 
         if (tracks.length !== 0 && track) {
@@ -141,6 +143,7 @@ class Player extends React.Component {
                         isPlayingNext={this.isPlayingNext}
                         tracks={tracks}
                         currentTime={currentTime}
+                        cursorTime={cursorTime}
                         duration={duration === '0:0NaN' ? '0:00' : duration}
                     />
                 </main>
